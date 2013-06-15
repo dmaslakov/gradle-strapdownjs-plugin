@@ -1,4 +1,6 @@
 gradle-strapdownjs-plugin
 =========================
 
-The Gradle plug-in producing HTMl files for use along with http://strapdownjs.com/.
+> IN DEVELOPMENT
+
+The plug-in for [Gradle](http://www.gradle.org/) producing HTML files for use along with [Strapdown.js](http://strapdownjs.com/).

@@ -1,0 +1,44 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+}
+repositories {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+}
+
+
+group = 'com.github.gradle-plugins'
+version = '0.1-SNAPSHOT'
+
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'idea'
+
+buildDir = '.build'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+dependencies {
+	compile localGroovy()
+	compile gradleApi()
+	compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
+	testCompile 'junit:junit:4.11'
+	testCompile 'org.spockframework:spock-core:0.6-groovy-1.8'
+}
+
+install.dependsOn build
+
+uploadArchives {
+	dependsOn build
+	repositories {
+		mavenDeployer {
+		}
+	}
+}
