@@ -18,6 +18,8 @@ class StrapdownJsTests extends Specification
 		Task t = p.tasks.findByName('strapdownjs')
 		t.configure {
 			destinationDir = p.buildDir
+			title = 'Simple Book Test'
+			theme = 'simplex'
 			from FileUtils.toFile(this.getClass().getResource('/simple'))
 			include '**/*.png'
 		}

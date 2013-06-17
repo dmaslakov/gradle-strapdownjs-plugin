@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
-$title
+<head>
+<% if (title != null && !title.empty) { out << '<title>' << title << '</title>' } %>
+</head>
 
-<xmp theme="united" style="display:none;">
+<xmp theme="${theme}" style="display:none;">
 $mdContent
 </xmp>
 
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+<script src="http://strapdownjs.com/v/${version}/strapdown.js"></script>
 </html>
