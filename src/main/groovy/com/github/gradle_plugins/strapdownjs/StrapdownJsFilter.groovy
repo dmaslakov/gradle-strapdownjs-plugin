@@ -14,7 +14,7 @@ public class StrapdownJsFilter extends FilterReader
 	{
 		template = tmpl
 		def w = new PipedWriter(super.in as PipedReader)
-		def pp = [mdContent: mdReader.text, htmlTitle: '', htmlPrefix: '', htmlSuffix: '']
+		def pp = [mdContent: mdReader.text, title: '']
 		new GStringTemplateEngine().createTemplate(tmpl).make(pp).writeTo(w)
 		w.close()
 	}

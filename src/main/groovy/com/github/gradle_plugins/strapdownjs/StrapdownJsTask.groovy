@@ -15,14 +15,6 @@ public class StrapdownJsTask extends Copy
 	@Optional
 	String htmlTitle
 
-	@Input
-	@Optional
-	String htmlPrefix
-
-	@Input
-	@Optional
-	String htmlSuffix
-
 	public StrapdownJsTask()
 	{
 		group = 'Documentation'
