@@ -62,7 +62,7 @@ public class StrapdownJsFilter extends FilterReader
 						title: StringEscapeUtils.escapeHtml(getText(this.title)),
 						theme: getText(this.theme),
 						version: getText(this.version)]
-				log.info("Apply variables to template: ${vars.dump()}")
+				log.debug('Apply variables to template: {}', vars.dump())
 				def content = new GStringTemplateEngine().createTemplate(getText(this.template)).make(vars).toString()
 				htmlReader = new StringReader(content)
 			}
