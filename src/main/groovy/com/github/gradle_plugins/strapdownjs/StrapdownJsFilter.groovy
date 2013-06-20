@@ -26,6 +26,9 @@ public class StrapdownJsFilter extends FilterReader
 	void setVersion(v) { (super.in as TemplateExpanderReader).version = v }
 	def getVersion() { (super.in as TemplateExpanderReader).version }
 
+	void setEncoding(enc) { (super.in as TemplateExpanderReader).encoding = enc }
+	def getEncoding() { (super.in as TemplateExpanderReader).encoding }
+
 	@Slf4j
 	static class TemplateExpanderReader extends Reader
 	{
@@ -36,6 +39,7 @@ public class StrapdownJsFilter extends FilterReader
 		def title
 		def theme
 		def version
+		def encoding
 
 		public TemplateExpanderReader(Reader mdReader)
 		{
@@ -61,7 +65,9 @@ public class StrapdownJsFilter extends FilterReader
 						mdContent: mdReader.text,
 						title: StringEscapeUtils.escapeHtml(getText(this.title)),
 						theme: getText(this.theme),
-						version: getText(this.version)]
+						version: getText(this.version),
+						encoding: getText(this.encoding)
+				]
 				log.debug('Apply variables to template: {}', vars.dump())
 				def content = new GStringTemplateEngine().createTemplate(getText(this.template)).make(vars).toString()
 				htmlReader = new StringReader(content)

@@ -21,14 +21,17 @@ A snippet of gradle build script below will make usage clear.
         title = 'My Manuals' // the HTML page title; not set by default
         theme = 'simplex' // theme to use; detaults to 'united'; check supported themes at http://strapdownjs.com/
         version = '0.2' // the version of strapdown.js; defaults to '0.2'
+        encoding = 'utf-8' // the encoding that will be used in HTML tag <meta>; defaults to 'utf-8'
 
         // to redefine template file:
         templateFile = file(...)
     }
 
 
-## How to build
-Use Gradle wrapper: `./gradlew` for *nix, or `gradlew.bat` for Windows.
+## How to develop
+Execute `gradle idea` and use IntelliJ IDEA with generated project file.
+
+Alternatively, do build using Gradle wrapper (`./gradlew` for *nix, or `gradlew.bat` for Windows) or use locally installed Gradle 1.6.
 
 ## License
 See [LICENSE](LICENSE) file.

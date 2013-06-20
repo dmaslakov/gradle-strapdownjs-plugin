@@ -7,6 +7,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 
+// TODO add comments
 public class StrapdownJsTask extends Copy
 {
 	@InputFile
@@ -24,7 +25,10 @@ public class StrapdownJsTask extends Copy
 	@Optional
 	String version
 
-	// TODO parameterize encoding, utf8 as default
+	@Input
+	@Optional
+	String encoding
+
 
 	public StrapdownJsTask()
 	{
@@ -36,6 +40,7 @@ public class StrapdownJsTask extends Copy
 			map 'title', { '' }
 			map 'theme', { 'united' }
 			map 'version', { '0.2' }
+			map 'encoding', { 'utf-8' }
 		}
 
 		eachFile { FileCopyDetails fcd ->
@@ -51,7 +56,8 @@ public class StrapdownJsTask extends Copy
 						template:   { this.getTemplateFile().text },
 						title:      { this.getTitle() },
 						theme:      { this.getTheme() },
-						version:    { this.getVersion() }
+						version:    { this.getVersion() },
+						encoding:    { this.getEncoding() }
 					)
 				}
 			}
