@@ -26,10 +26,10 @@ class StrapdownJsTests extends Specification
 
 		when: /configure and execute task 'strapdownjs'/
 			t.configure {
-				destinationDir = p.buildDir
-				title = 'Book of Simple Tests'
-				theme = 'simplex'
-				from origDir
+					destinationDir = p.buildDir
+					title = 'Book of Simple Tests'
+					theme = 'simplex'
+					from origDir
 			}
 			t.execute()
 		then: "Target HTML file exists and with expected content"

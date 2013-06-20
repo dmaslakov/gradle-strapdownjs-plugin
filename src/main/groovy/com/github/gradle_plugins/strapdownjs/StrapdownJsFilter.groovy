@@ -5,14 +5,17 @@ import groovy.util.logging.Slf4j
 import org.apache.commons.lang.StringEscapeUtils
 
 /**
- * Creates HTML that wraps markdown.
+ * Creates HTML code around input Markdown text.
  */
 public class StrapdownJsFilter extends FilterReader
 {
 	public StrapdownJsFilter(Reader mdReader)
 	{
+		// inject own Reader that will add surrounding HTML code for input Markdown text.
 		super(new TemplateExpanderReader(mdReader))
 	}
+
+	// all parameters are proxied down into own Reader implementation:
 
 	void setTemplate(tmpl) { (super.in as TemplateExpanderReader).template = tmpl }
 	def getTemplate() { (super.in as TemplateExpanderReader).template }
@@ -60,7 +63,7 @@ public class StrapdownJsFilter extends FilterReader
 		int read(char[] cbuf, int off, int len) throws IOException
 		{
 			if (htmlReader == null) {
-				// postponed evaluation of template, right when reading is started
+				// postponed evaluation of template, right before reading is started
 				def vars = [
 						mdContent: mdReader.text,
 						title: StringEscapeUtils.escapeHtml(getText(this.title)),
