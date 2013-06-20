@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=$encoding">
+<meta http-equiv="Content-Type" content="text/html; charset=${encoding}">
 <% if (title != null && !title.empty) { out << '<title>' << title << '</title>' } %>
 </head>
 
 <xmp theme="${theme}" style="display:none;">
-$mdContent
+${mdContent}
 </xmp>
 
 <script src="http://strapdownjs.com/v/${version}/strapdown.js"></script>

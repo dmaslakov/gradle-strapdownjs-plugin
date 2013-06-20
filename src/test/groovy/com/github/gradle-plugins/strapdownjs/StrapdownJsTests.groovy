@@ -35,7 +35,15 @@ class StrapdownJsTests extends Specification
 		then: "Target HTML file exists and with expected content"
 			def out_file = new File(t.destinationDir, 'simple.html')
 			out_file.exists()
-			// TODO check content is correct, all parameters applied as expected
+			def expected_content = FileUtils.toFile(StrapdownJsTask.getClass().getResource('/com/github/gradle-plugins/strapdownjs/default.html'))
+					.text
+					.replace('${theme}', t.theme)
+					.replace('${version}', t.version)
+					.replace('${encoding}', t.encoding)
+					.replaceFirst(~/\<%.*?%\>/, "<title>${t.title}</title>")
+					.replace('${mdContent}', new File(origDir, 'simple.md').text)
+					.replaceAll(~/\r\n|\n\r|\n|\r/, '\n')
+			expected_content == out_file.text.replaceAll(~/\r\n|\n\r|\n|\r/, '\n')
 		and: "accompanying image file exists and content not changed"
 			def img_file = new File(t.destinationDir, 'simple.png')
 			img_file.exists()
