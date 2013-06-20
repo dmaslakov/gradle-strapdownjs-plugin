@@ -13,20 +13,27 @@ A snippet of gradle build script below will make usage clear.
     }
 
     strapdownjs {
-        // parameters as required for Copy task:
+        // parameters inherited from Copy task (check it for more details):
         destinationDir = "$buildDir/manuals"
         from 'manuals'
 
-        // specific parameters:
-        title = 'My Manuals' // the HTML page title; not set by default
-        theme = 'simplex' // theme to use; detaults to 'united'; check supported themes at http://strapdownjs.com/
-        version = '0.2' // the version of strapdown.js; defaults to '0.2'
-        encoding = 'utf-8' // the encoding that will be used in HTML tag <meta>; defaults to 'utf-8'
+        // parameters:
+        title = 'My Manuals'        // the HTML page title; not set by default
 
-        // to redefine template file:
-        templateFile = file(...)
+        theme = 'simplex'           // theme to use; detaults to 'united';
+                                    // check supported themes at http://strapdownjs.com/
+
+        // advanced parameters:
+        version = '0.2'             // the version of strapdown.js; defaults to '0.2'
+
+        encoding = 'utf-8'          // the encoding that will be used in HTML tag <meta>;
+                                    // defaults to 'utf-8'
+
+        templateFile = file(...)    // to redefine template file;
+                                    // check default template for inspiration
     }
 
+If not overridden the [default template](src/main/resources/com/github/gradle-plugins/strapdownjs/default.html) is used.
 
 ## How to develop
 Execute `gradle idea` and use IntelliJ IDEA with generated project file.
