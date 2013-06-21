@@ -7,7 +7,7 @@ repositories {
 
 description = 'The Gradle plug-in for transforming Markdown files into HTML files with approach of http://strapdownjs.com/.'
 group = 'com.github.gradle-plugins'
-version = '0.1'
+version = '0.2-SNAPSHOT'
 
 
 apply plugin: 'groovy'
