@@ -27,6 +27,7 @@ public class StrapdownJsTask extends Copy
 	 * </ul>
 	 */
 	@InputFile
+	@Optional
 	File templateFile
 
 	/**
@@ -58,7 +59,7 @@ public class StrapdownJsTask extends Copy
 	String encoding
 
 	protected final Map<String, String> predefinedTemplates = [
-		default: '/com/github/gradle-plugins/strapdownjs/default.html'
+		default: '/com/github/gradle_plugins/strapdownjs/default.html'
 	].asImmutable()
 
 	public StrapdownJsTask()

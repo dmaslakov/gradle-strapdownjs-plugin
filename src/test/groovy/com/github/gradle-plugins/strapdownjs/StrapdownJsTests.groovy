@@ -35,7 +35,7 @@ class StrapdownJsTests extends Specification
 		then: "Target HTML file exists and with expected content"
 			def out_file = new File(t.destinationDir, 'simple.html')
 			out_file.exists()
-			def expected_content = FileUtils.toFile(StrapdownJsTask.getClass().getResource('/com/github/gradle-plugins/strapdownjs/default.html'))
+			def expected_content = FileUtils.toFile(StrapdownJsTask.getClass().getResource('/com/github/gradle_plugins/strapdownjs/default.html'))
 					.text
 					.replace('${theme}', t.theme)
 					.replace('${version}', t.version)
