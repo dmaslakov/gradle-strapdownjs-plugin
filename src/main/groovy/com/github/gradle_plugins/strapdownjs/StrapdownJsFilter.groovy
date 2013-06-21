@@ -2,7 +2,6 @@ package com.github.gradle_plugins.strapdownjs
 
 import groovy.text.GStringTemplateEngine
 import groovy.util.logging.Slf4j
-import org.apache.commons.lang.StringEscapeUtils
 
 /**
  * Creates HTML code around input Markdown text.
@@ -38,25 +37,15 @@ public class StrapdownJsFilter extends FilterReader
 		private Reader mdReader
 		private StringReader htmlReader
 
-		def template
-		def title
-		def theme
-		def version
-		def encoding
+		String template
+		String title
+		String theme
+		String version
+		String encoding
 
 		public TemplateExpanderReader(Reader mdReader)
 		{
 			this.mdReader = mdReader
-		}
-
-		private static String getText(obj)
-		{
-			switch (obj)
-			{
-				case File:      return (obj as File).text
-				case Closure:   return obj.call()
-			}
-			return obj.toString()
 		}
 
 		@Override
@@ -65,14 +54,16 @@ public class StrapdownJsFilter extends FilterReader
 			if (htmlReader == null) {
 				// postponed evaluation of template, right before reading is started
 				def vars = [
-						mdContent: mdReader.text,
-						title: StringEscapeUtils.escapeHtml(getText(this.title)),
-						theme: getText(this.theme),
-						version: getText(this.version),
-						encoding: getText(this.encoding)
+						mdContent:  mdReader.text,
+						title:      this.title,
+						// TODO need escape
+						//title:      StringEscapeUtils.escapeHtml(this.title),
+						theme:      this.theme,
+						version:    this.version,
+						encoding:   this.encoding
 				]
 				log.debug('Apply variables to template: {}', vars.dump())
-				def content = new GStringTemplateEngine().createTemplate(getText(this.template)).make(vars).toString()
+				def content = new GStringTemplateEngine().createTemplate(this.template).make(vars).toString()
 				htmlReader = new StringReader(content)
 			}
 			return htmlReader.read(cbuf, off, len)

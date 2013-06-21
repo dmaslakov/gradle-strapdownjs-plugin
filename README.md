@@ -1,7 +1,5 @@
 # Gradle plug-in for Strapdown.js
 
-> IN DEVELOPMENT
-
 The plug-in for [Gradle](http://www.gradle.org/) producing HTML files for use along with [Strapdown.js](http://strapdownjs.com/).
 
 ## How to use
@@ -9,7 +7,12 @@ The plug-in for [Gradle](http://www.gradle.org/) producing HTML files for use al
 A snippet of gradle build script below will make usage clear. It will copy all files with extension `.md` or `.mdown` or `.markdown` into target directory with converting it into HTML and changing file extension to `.html`. All other files will be copied without any changes.
 
     buildscript {
-        TODO add link to bintray
+        repositories {
+            mavenRepo url: uri('http://dl.bintray.com/dmaslakov/gradle-plugins')
+        }
+        dependencies {
+            classpath 'com.github.gradle-plugins:gradle-strapdownjs-plugin:0.1'
+        }
     }
 
     strapdownjs {
@@ -29,11 +32,11 @@ A snippet of gradle build script below will make usage clear. It will copy all f
         encoding = 'utf-8'          // the encoding that will be used in HTML tag <meta>;
                                     // defaults to 'utf-8'
 
-        templateFile = file(...)    // to redefine template file;
+        template = file(...).text   // redefines template;
                                     // check default template for inspiration
     }
 
-If not redefined through `templateFile`, the [default template](src/main/resources/com/github/gradle-plugins/strapdownjs/default.html) is used.
+If not redefined through `template`, the [default template](src/main/resources/com/github/gradle-plugins/strapdownjs/default.html) is used.
 
 ## How to develop
 ### Edit and build

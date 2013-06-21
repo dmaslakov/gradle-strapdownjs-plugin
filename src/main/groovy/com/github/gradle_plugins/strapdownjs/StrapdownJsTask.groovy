@@ -1,10 +1,8 @@
 package com.github.gradle_plugins.strapdownjs
 
-import org.apache.commons.io.FileUtils
 import org.gradle.api.file.FileCopyDetails
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 
 /**
@@ -16,8 +14,9 @@ import org.gradle.api.tasks.Optional
 public class StrapdownJsTask extends Copy
 {
 	/**
-	 * Path to template file.
-	 * Template file must match syntax supported by GStringTemplateEngine.
+	 * String representing HTML template.
+	 * Template must match syntax supported by GStringTemplateEngine.
+	 *
 	 * Supported parameters to use in template file:
 	 * <ul>
 	 * <li>title - the title of generated HTML document</li>
@@ -26,9 +25,9 @@ public class StrapdownJsTask extends Copy
 	 * <li>encoding - encoding to use within tag <meta> in generated HTML</li>
 	 * </ul>
 	 */
-	@InputFile
+	@Input
 	@Optional
-	File templateFile
+	String template
 
 	/**
 	 * The title of generated HTML document. Default: not set.
@@ -68,7 +67,7 @@ public class StrapdownJsTask extends Copy
 		description = 'Convert markdown files into HTML files for use with http://strapdownjs.com/.'
 
 		conventionMapping.with {
-			map 'templateFile', { FileUtils.toFile(this.getClass().getResource(this.predefinedTemplates.default)) }
+			map 'template', { this.getClass().getResourceAsStream(this.predefinedTemplates.default).text }
 			map 'title', { '' }
 			map 'theme', { 'united' }
 			map 'version', { '0.2' }
@@ -84,13 +83,11 @@ public class StrapdownJsTask extends Copy
 					fcd.name = m[0][1] + '.html'
 					// filter content
 					fcd.filter(StrapdownJsFilter,
-						// parameters are wrapped with closures to postpone real evaluation till real execution;
-						// otherwise methods return default values declared in conventionMapping
-						template:   { this.getTemplateFile().text },
-						title:      { this.getTitle() },
-						theme:      { this.getTheme() },
-						version:    { this.getVersion() },
-						encoding:   { this.getEncoding() }
+						template:   this.getTemplate(),
+						title:      this.getTitle(),
+						theme:      this.getTheme(),
+						version:    this.getVersion(),
+						encoding:   this.getEncoding()
 					)
 				}
 			}
