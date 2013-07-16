@@ -32,8 +32,12 @@ A snippet of gradle build script below will make usage clear. It will copy all f
         encoding = 'utf-8'          // the encoding that will be used in HTML tag <meta>;
                                     // defaults to 'utf-8'
 
-        template = file(...).text   // redefines template;
-                                    // check default template for inspiration
+        template( file(...) )       // redefine template with content of file
+        template( '...' )           // or redefine template with string value;
+                                    // check the default template for inspiration
+
+        // also custom templates may contain additional properties
+        template( '...', prop1:'val1', prop2:'val2' )
     }
 
 If not redefined through `template`, the [default template](src/main/resources/com/github/gradle-plugins/strapdownjs/default.html) is used.

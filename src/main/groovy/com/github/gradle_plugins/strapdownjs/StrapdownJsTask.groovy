@@ -14,7 +14,7 @@ import org.gradle.api.tasks.Optional
 public class StrapdownJsTask extends Copy
 {
 	/**
-	 * String representing HTML template.
+	 * The file or string with template body. If not set, the default template will be used.
 	 * Template must match syntax supported by GStringTemplateEngine.
 	 *
 	 * Supported parameters to use in template file:
@@ -25,9 +25,27 @@ public class StrapdownJsTask extends Copy
 	 * <li>encoding - encoding to use within tag <meta> in generated HTML</li>
 	 * </ul>
 	 */
-	@Input
-	@Optional
-	String template
+	protected Object templateBody_
+
+	/**
+	 * Additional properties for use with custom template.
+	 */
+	protected Map<String, ?> templateVars_
+
+	/**
+	 * Sets the custom template with only predefined parameters.
+	 */
+	void template(tmpl) { this.template(null, tmpl) }
+
+	/**
+	 * Sets the custom template with additional parameters.
+	 */
+	void template(Map<String, ?> vars, tmpl)
+	{
+		assert tmpl != null
+		templateBody_ = tmpl
+		templateVars_ = vars
+	}
 
 	/**
 	 * The title of generated HTML document. Default: not set.
@@ -61,18 +79,33 @@ public class StrapdownJsTask extends Copy
 		default: '/com/github/gradle_plugins/strapdownjs/default.html'
 	].asImmutable()
 
+	protected String getTemplateBody()
+	{
+		if (templateBody_ == null)
+			return this.getClass().getResourceAsStream(this.predefinedTemplates.default).text
+
+		switch (templateBody_) {
+			case File:      return (templateBody_ as File).text
+			case String:    return templateBody_ as String
+		}
+
+		return templateBody_.toString()
+	}
+
 	public StrapdownJsTask()
 	{
 		group = 'Documentation'
 		description = 'Convert markdown files into HTML files for use with http://strapdownjs.com/.'
 
 		conventionMapping.with {
-			map 'template', { this.getClass().getResourceAsStream(this.predefinedTemplates.default).text }
 			map 'title', { '' }
 			map 'theme', { 'united' }
 			map 'version', { '0.2' }
 			map 'encoding', { 'utf-8' }
 		}
+
+		inputs.property 'templateBody', { this.getTemplateBody() }
+		inputs.property 'templateVars', { this.templateVars_ }
 
 		eachFile { FileCopyDetails fcd ->
 			if (!fcd.directory) {
@@ -83,7 +116,8 @@ public class StrapdownJsTask extends Copy
 					fcd.name = m[0][1] + '.html'
 					// filter content
 					fcd.filter(StrapdownJsFilter,
-						template:   this.getTemplate(),
+						template:   this.getTemplateBody(),
+						vars:       this.templateVars_,
 						title:      this.getTitle(),
 						theme:      this.getTheme(),
 						version:    this.getVersion(),

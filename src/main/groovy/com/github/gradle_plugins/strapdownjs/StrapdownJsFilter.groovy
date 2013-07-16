@@ -19,6 +19,9 @@ public class StrapdownJsFilter extends FilterReader
 	void setTemplate(tmpl) { (super.in as TemplateExpanderReader).template = tmpl }
 	def getTemplate() { (super.in as TemplateExpanderReader).template }
 
+	void setVars(Map<String, ?> vars) { (super.in as TemplateExpanderReader).vars = vars }
+	def getVars() { (super.in as TemplateExpanderReader).vars }
+
 	void setTitle(ttl) { (super.in as TemplateExpanderReader).title = ttl }
 	def getTitle() { (super.in as TemplateExpanderReader).title }
 
@@ -38,6 +41,7 @@ public class StrapdownJsFilter extends FilterReader
 		private StringReader htmlReader
 
 		String template
+		Map<String, ?> vars
 		String title
 		String theme
 		String version
@@ -53,7 +57,7 @@ public class StrapdownJsFilter extends FilterReader
 		{
 			if (htmlReader == null) {
 				// postponed evaluation of template, right before reading is started
-				def vars = [
+				def finalVars = (this.vars ?: [:]) + [
 						mdContent:  mdReader.text,
 						title:      this.title,
 						// TODO need escape
@@ -62,8 +66,8 @@ public class StrapdownJsFilter extends FilterReader
 						version:    this.version,
 						encoding:   this.encoding
 				]
-				log.debug('Apply variables to template: {}', vars.dump())
-				def content = new GStringTemplateEngine().createTemplate(this.template).make(vars).toString()
+				log.debug('Apply variables to template: {}', finalVars.dump())
+				def content = new GStringTemplateEngine().createTemplate(this.template).make(finalVars).toString()
 				htmlReader = new StringReader(content)
 			}
 			return htmlReader.read(cbuf, off, len)
