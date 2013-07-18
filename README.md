@@ -45,7 +45,7 @@ If not redefined through `template`, the [default template](src/main/resources/c
 All versions are available for download from [Bintray](https://bintray.com/dmaslakov/gradle-plugins/gradle-strapdownjs-plugin).
 
 ## Issues
-Of course, there are some [issues](issues) even in such simple project. Check them before starting to use the plug-in.
+Of course, there are some [issues](https://github.com/dmaslakov/gradle-strapdownjs-plugin/issues) even in such simple project. Check them before starting to use the plug-in.
 
 If you find an issue you want to see implemented, feel free to ping me in comments &mdash; it will raise the priority. Pull requests are welcome as well.
 
