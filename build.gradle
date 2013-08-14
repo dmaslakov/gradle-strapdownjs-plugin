@@ -37,10 +37,7 @@ dependencies {
 	deployerJars 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
 }
 
-task wrapper(type: Wrapper) {
-	description = 'Gradle wrapper task'
-	gradleVersion = '1.6'
-}
+wrapper.gradleVersion = '1.7'
 
 install.dependsOn check
 
